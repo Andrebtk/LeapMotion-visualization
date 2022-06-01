@@ -1,0 +1,213 @@
+<html>
+  <head>
+    <title>Dumper - Leap</title>
+    <script src="https://artamis.xyz/leap_motion/leap-1.1.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <h1>Put your hand above the Leap Motion</h1>
+    <canvas id="canvas" width="2000" height="1000"></canvas>
+
+    <style>
+      h1{
+        text-align:center;
+      }
+    </style>
+    
+    <script>
+ 
+
+      function upd(){
+        console.log("------------------------------------")
+      }
+
+      function sleep(delay) {
+          var start = new Date().getTime();
+          while (new Date().getTime() < start + delay);
+      }
+
+
+      var state = 'play';
+      
+      window.onkeypress = function(e) {
+        if (e.charCode == 32) { //spacebar
+          if (state == 'play') {
+            state = 'pausing';
+          }else{
+            state = 'play';
+          }
+        }
+      };
+      
+      var haveLoggedFrame = false;
+      var controller = new Leap.Controller();
+
+      const canvas = document.querySelector('#canvas');
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const W = ctx.canvas.width, H = ctx.canvas.height;
+      ctx.setTransform(1,0,0,1,0,0); 
+      ctx.clearRect(0,0,W,H);
+
+      ctx.setTransform(1, 0, 0, 1, W / 2, H / 2); 
+
+      
+      ctx.lineWidth = 5;
+      
+      function drawpoint(ctx, x, z, y) {       
+          ctx.fillRect(x, y, 5, 5); 
+      }
+
+      
+
+      controller.loop(function(frame) {
+        
+
+        
+        
+        ctx.clearRect(-2000, -2000, 4000, 4000);
+
+
+        if (state == 'paused') return;
+        if (state == 'pausing') { state = 'paused'; }
+
+
+
+        
+       
+        //pd()
+
+        if(typeof frame.hands[0] != 'undefined'){
+            var hand = frame.hands[0];
+            var hand2 = frame.hands[1];
+            
+
+            if (typeof hand2 == 'undefined'){
+            for(i=0;i!=5;i++){
+                        
+                var finger = hand.fingers[i]
+                //console.log("Finger number : ", i)
+    
+                //upd()
+                /*
+                console.log("Finger.carpPosition ")
+                console.log(finger.carpPosition)
+                console.log('---')
+    
+                
+                console.log("Finger.medial ")
+                console.log(finger.medial.prevJoint)
+                console.log('---')
+    
+    
+                console.log("Finger.dipPosition ")
+                console.log(finger.dipPosition)
+                console.log('---')
+                
+    
+                console.log("Finger.distal ")
+                console.log(finger.distal.nextJoint)
+                console.log('---')
+                */
+    
+    
+                drawpoint(ctx, finger.carpPosition[0], 0,finger.carpPosition[2])
+                drawpoint(ctx, finger.medial.prevJoint[0], 0, finger.medial.prevJoint[2])
+                drawpoint(ctx, finger.dipPosition[0], 0, finger.dipPosition[2])
+                drawpoint(ctx, finger.distal.nextJoint[0], 0, finger.distal.nextJoint[2])
+    
+                drawpoint(ctx, ((hand.fingers[2].medial.prevJoint[0]) + (hand.fingers[2].carpPosition[0]))/2 , 0, ((hand.fingers[2].medial.prevJoint[2]) + (hand.fingers[2].carpPosition[2]))/2)
+                
+                //console.log("x :"+((hand.fingers[2].medial.prevJoint[0]) + (hand.fingers[2].carpPosition[0]))/2)
+                //console.log("y :"+((hand.fingers[2].medial.prevJoint[2]) + (hand.fingers[2].carpPosition[2]))/2)
+                
+
+
+                
+            }
+            }else{
+            for(i=0;i!=5;i++){
+                        
+                        var finger = hand.fingers[i]
+                        //console.log("Finger number : ", i)
+                        /*
+                        upd()
+                        console.log("Finger.carpPosition ")
+                        console.log(finger.carpPosition)
+                        console.log('---')
+            
+                        
+                        console.log("Finger.medial ")
+                        console.log(finger.medial.prevJoint)
+                        console.log('---')
+            
+            
+                        console.log("Finger.dipPosition ")
+                        console.log(finger.dipPosition)
+                        console.log('---')
+                        
+            
+                        console.log("Finger.distal ")
+                        console.log(finger.distal.nextJoint)
+                        console.log('---')
+                        */
+            
+                          
+                        drawpoint(ctx, finger.carpPosition[0], 0,finger.carpPosition[2])
+                        drawpoint(ctx, finger.medial.prevJoint[0], 0, finger.medial.prevJoint[2])
+                        drawpoint(ctx, finger.dipPosition[0], 0, finger.dipPosition[2])
+                        drawpoint(ctx, finger.distal.nextJoint[0], 0, finger.distal.nextJoint[2])
+            
+                        drawpoint(ctx, ((hand.fingers[2].medial.prevJoint[0]) + (hand.fingers[2].carpPosition[0]))/2 , 0, ((hand.fingers[2].medial.prevJoint[2]) + (hand.fingers[2].carpPosition[2]))/2)
+                        
+                        
+                    }
+            
+                    
+                    for(i=0;i!=5;i++){
+                        
+                        var finger = hand2.fingers[i]
+                        
+                        
+                        /*console.log("Finger number : ", i)
+            
+                        upd()
+                        console.log("Finger.carpPosition ")
+                        console.log(finger.carpPosition)
+                        console.log('---')
+            
+                        
+                        console.log("Finger.medial ")
+                        console.log(finger.medial.prevJoint)
+                        console.log('---')
+            
+            
+                        console.log("Finger.dipPosition ")
+                        console.log(finger.dipPosition)
+                        console.log('---')
+                        
+            
+                        console.log("Finger.distal ")
+                        console.log(finger.distal.nextJoint)
+                        console.log('---')
+
+                        */
+            
+            
+                        drawpoint(ctx, finger.carpPosition[0], 0,finger.carpPosition[2])
+                        drawpoint(ctx, finger.medial.prevJoint[0], 0, finger.medial.prevJoint[2])
+                        drawpoint(ctx, finger.dipPosition[0], 0, finger.dipPosition[2])
+                        drawpoint(ctx, finger.distal.nextJoint[0], 0, finger.distal.nextJoint[2])
+            
+                        drawpoint(ctx, ((hand2.fingers[2].medial.prevJoint[0]) + (hand2.fingers[2].carpPosition[0]))/2 , 0, ((hand2.fingers[1].medial.prevJoint[2]) + (hand2.fingers[2].carpPosition[2]))/2)
+                        
+                        
+                    }
+                }
+        }
+        
+      });
+    </script>
+  </head>
+</html>
