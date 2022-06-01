@@ -2,7 +2,7 @@
 
 
 # How to install Leap-Motion
-
+Use the following link : https://developer.leapmotion.com/tracking-software-download/
 
 # End result
 
